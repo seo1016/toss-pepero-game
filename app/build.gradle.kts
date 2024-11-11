@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.toss.pepero"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.toss.pepero"
@@ -36,6 +36,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
