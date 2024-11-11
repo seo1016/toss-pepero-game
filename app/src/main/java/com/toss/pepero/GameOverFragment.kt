@@ -17,6 +17,13 @@ class GameOverFragment : Fragment() {
     ): View {
         binding = FragmentGameOverBinding.inflate(inflater, container, false)
 
+        binding.btnRetry.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, GameFragment())
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
+        }
+
         return binding.root
     }
 }
