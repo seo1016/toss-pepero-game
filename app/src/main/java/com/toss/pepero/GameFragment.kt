@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.FrameLayout
 import android.view.animation.AlphaAnimation
 import androidx.core.animation.addListener
 import com.toss.pepero.databinding.FragmentGameBinding
@@ -19,6 +19,7 @@ class GameFragment : Fragment() {
 
     private lateinit var binding: FragmentGameBinding
     private lateinit var progressAnimator: ValueAnimator
+    private lateinit var gameContainer: FrameLayout
     private val totalTimeInMillis = 20000L // 20초
     private var collectedPepero = 0
     private val itemsMap = mutableMapOf<ImageView, Boolean>()
@@ -36,11 +37,12 @@ class GameFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentGameBinding.inflate(inflater, container, false)
+        gameContainer = binding.flGame
 
         setupSeekBar()
         startSmoothTimer()
 
-        binding.root.post {
+        gameContainer.post {
             startItemGeneration()
         }
 
@@ -81,27 +83,27 @@ class GameFragment : Fragment() {
     private fun generateItem() {
         if (!isAdded) return
 
-        val containerLayout = binding.root
-
-        if (containerLayout.width <= 0 || containerLayout.height <= 0) {
-            containerLayout.post { generateItem() }
+        if (gameContainer.width <= 0 || gameContainer.height <= 0) {
+            gameContainer.post { generateItem() }
             return
         }
 
         val imageView = ImageView(requireContext()).apply {
             val size = dpToPx(60)
-            layoutParams = ConstraintLayout.LayoutParams(size, size)
+            layoutParams = FrameLayout.LayoutParams(size, size)
         }
 
-        val maxX = maxOf(containerLayout.width - dpToPx(60), dpToPx(30))
-        val maxY = maxOf(containerLayout.height - dpToPx(60), dpToPx(100))
-        val randomX = Random.nextInt(dpToPx(30), maxX)
-        val randomY = Random.nextInt(dpToPx(100), maxY)
+        // Calculate random position within the game container bounds
+        val maxX = maxOf(gameContainer.width - dpToPx(60), 0)
+        val maxY = maxOf(gameContainer.height - dpToPx(60), 0)
+        val randomX = Random.nextInt(0, maxX)
+        val randomY = Random.nextInt(0, maxY)
 
-        imageView.x = randomX.toFloat()
-        imageView.y = randomY.toFloat()
+        (imageView.layoutParams as FrameLayout.LayoutParams).apply {
+            leftMargin = randomX
+            topMargin = randomY
+        }
 
-        // 랜덤
         val randomResource = itemResources.random()
         imageView.setImageResource(randomResource)
 
@@ -110,7 +112,7 @@ class GameFragment : Fragment() {
         imageView.setOnClickListener {
             if (itemsMap[imageView] == true) {
                 collectedPepero++
-                showPlusOne(imageView.x, imageView.y)
+                showPlusOne(randomX.toFloat(), randomY.toFloat())
                 updateCollectedCount()
 
                 imageView.setOnClickListener(null)
@@ -121,7 +123,7 @@ class GameFragment : Fragment() {
                         override fun onAnimationStart(animation: android.view.animation.Animation?) {}
 
                         override fun onAnimationEnd(animation: android.view.animation.Animation?) {
-                            containerLayout.removeView(imageView)
+                            gameContainer.removeView(imageView)
                             itemsMap.remove(imageView)
                         }
 
@@ -141,7 +143,7 @@ class GameFragment : Fragment() {
             }
         }
 
-        containerLayout.addView(imageView)
+        gameContainer.addView(imageView)
 
         val fadeIn = AlphaAnimation(0f, 1f)
         fadeIn.duration = 300
@@ -154,7 +156,7 @@ class GameFragment : Fragment() {
                 fadeOut.setAnimationListener(object : android.view.animation.Animation.AnimationListener {
                     override fun onAnimationStart(animation: android.view.animation.Animation?) {}
                     override fun onAnimationEnd(animation: android.view.animation.Animation?) {
-                        containerLayout.removeView(imageView)
+                        gameContainer.removeView(imageView)
                         itemsMap.remove(imageView)
                     }
                     override fun onAnimationRepeat(animation: android.view.animation.Animation?) {}
@@ -164,7 +166,7 @@ class GameFragment : Fragment() {
         }, 1500)
 
         val nextDelay = Random.nextLong(200, 400)
-        containerLayout.postDelayed({ generateItem() }, nextDelay)
+        gameContainer.postDelayed({ generateItem() }, nextDelay)
     }
 
     private fun showPlusOne(x: Float, y: Float) {
@@ -172,21 +174,28 @@ class GameFragment : Fragment() {
             text = "+1"
             textSize = 24f
             setTextColor(resources.getColor(android.R.color.black, null))
-            translationX = x
-            translationY = y
+            layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                leftMargin = x.toInt()
+                topMargin = y.toInt()
+            }
         }
 
-        val containerLayout = binding.root
-        containerLayout.addView(plusOneText)
+        gameContainer.addView(plusOneText)
 
         ValueAnimator.ofFloat(0f, -100f).apply {
             duration = 1000
             addUpdateListener {
-                plusOneText.translationY = y + animatedValue as Float
+                (plusOneText.layoutParams as FrameLayout.LayoutParams).apply {
+                    topMargin = (y + (animatedValue as Float)).toInt()
+                    plusOneText.layoutParams = this
+                }
                 plusOneText.alpha = 1 - (animatedValue as Float / -100f)
             }
             addListener(onEnd = {
-                containerLayout.removeView(plusOneText)
+                gameContainer.removeView(plusOneText)
             })
             start()
         }
