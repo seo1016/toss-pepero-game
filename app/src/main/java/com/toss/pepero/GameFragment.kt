@@ -113,6 +113,24 @@ class GameFragment : Fragment() {
                 showPlusOne(imageView.x, imageView.y)
                 updateCollectedCount()
 
+                imageView.setOnClickListener(null)
+
+                val fadeOut = AlphaAnimation(1f, 0f).apply {
+                    duration = 300
+                    setAnimationListener(object : android.view.animation.Animation.AnimationListener {
+                        override fun onAnimationStart(animation: android.view.animation.Animation?) {}
+
+                        override fun onAnimationEnd(animation: android.view.animation.Animation?) {
+                            containerLayout.removeView(imageView)
+                            itemsMap.remove(imageView)
+                        }
+
+                        override fun onAnimationRepeat(animation: android.view.animation.Animation?) {}
+                    })
+                }
+
+                imageView.startAnimation(fadeOut)
+
                 if (collectedPepero >= 3) {
                     progressAnimator.cancel()
                     requireActivity().supportFragmentManager.beginTransaction()
