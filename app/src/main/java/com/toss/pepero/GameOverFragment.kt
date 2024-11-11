@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.toss.pepero.databinding.FragmentFailureBinding
 
-class FailureFragment : Fragment() {
+class GameOverFragment : Fragment() {
 
     private lateinit var binding: FragmentFailureBinding
 

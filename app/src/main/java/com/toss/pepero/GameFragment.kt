@@ -68,7 +68,7 @@ class GameFragment : Fragment() {
 
             addListener(onEnd = {
                 if (collectedPepero < 3) {
-                    // 게임오버
+                    gameOver()
                 }
             })
         }
@@ -93,7 +93,6 @@ class GameFragment : Fragment() {
             layoutParams = FrameLayout.LayoutParams(size, size)
         }
 
-        // Calculate random position within the game container bounds
         val maxX = maxOf(gameContainer.width - dpToPx(60), 0)
         val maxY = maxOf(gameContainer.height - dpToPx(60), 0)
         val randomX = Random.nextInt(0, maxX)
@@ -140,6 +139,8 @@ class GameFragment : Fragment() {
                         .addToBackStack(null)
                         .commitAllowingStateLoss()
                 }
+            } else {
+                gameOver()
             }
         }
 
@@ -155,10 +156,12 @@ class GameFragment : Fragment() {
                 fadeOut.duration = 300
                 fadeOut.setAnimationListener(object : android.view.animation.Animation.AnimationListener {
                     override fun onAnimationStart(animation: android.view.animation.Animation?) {}
+
                     override fun onAnimationEnd(animation: android.view.animation.Animation?) {
                         gameContainer.removeView(imageView)
                         itemsMap.remove(imageView)
                     }
+
                     override fun onAnimationRepeat(animation: android.view.animation.Animation?) {}
                 })
                 imageView.startAnimation(fadeOut)
@@ -167,6 +170,14 @@ class GameFragment : Fragment() {
 
         val nextDelay = Random.nextLong(200, 400)
         gameContainer.postDelayed({ generateItem() }, nextDelay)
+    }
+
+    private fun gameOver() {
+        progressAnimator.cancel()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, GameOverFragment())
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
     }
 
     private fun showPlusOne(x: Float, y: Float) {
