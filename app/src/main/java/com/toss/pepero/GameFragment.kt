@@ -100,7 +100,6 @@ class GameFragment : Fragment() {
         var randomY: Int
         var overlap: Boolean
 
-        // Generate a position that doesn't overlap any existing item
         do {
             randomX = Random.nextInt(0, maxX)
             randomY = Random.nextInt(0, maxY)
@@ -112,7 +111,6 @@ class GameFragment : Fragment() {
                 val existingRight = existingLeft + existingView.width
                 val existingBottom = existingTop + existingView.height
 
-                // Check if new item overlaps with an existing item
                 if (randomX < existingRight && randomX + dpToPx(100) > existingLeft &&
                     randomY < existingBottom && randomY + dpToPx(100) > existingTop) {
                     overlap = true
