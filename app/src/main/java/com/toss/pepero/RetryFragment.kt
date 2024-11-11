@@ -17,6 +17,11 @@ class RetryFragment : Fragment() {
     ): View {
         binding = FragmentRetryBinding.inflate(inflater, container, false)
 
+        binding.tvGuide.setOnClickListener {
+            val bottomSheet = GameGuideBottomSheetFragment()
+            bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+        }
+
         return binding.root
     }
 }

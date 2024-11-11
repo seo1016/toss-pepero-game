@@ -24,6 +24,11 @@ class GameOverFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
+        binding.tvGuide.setOnClickListener {
+            val bottomSheet = GameGuideBottomSheetFragment()
+            bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+        }
+
         return binding.root
     }
 }

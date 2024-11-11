@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이벤트 안내"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_semibold"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="- 빼빼로 3개를 모두 주우면 성공하는 게임이에요"
+        android:textSize="16sp"
+        android:textColor="@color/toss_gray"
+        android:fontFamily="@font/pretendard_medium"
+        android:paddingBottom="4dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="- 시간안에 빼빼로를 모두 줍지 못하면 실패해요"
+        android:textSize="16sp"
+        android:textColor="@color/toss_gray"
+        android:fontFamily="@font/pretendard_medium"
+        android:paddingBottom="4dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="- 빼빼로가 아닌 다른 아이템을 주으면 실패해요"
+        android:textSize="16sp"
+        android:textColor="@color/toss_gray"
+        android:fontFamily="@font/pretendard_medium"
+        android:paddingBottom="4dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="- 🥳"
+        android:textSize="16sp"
+        android:textColor="@color/toss_gray"
+        android:fontFamily="@font/pretendard_medium"/>
+</LinearLayout>

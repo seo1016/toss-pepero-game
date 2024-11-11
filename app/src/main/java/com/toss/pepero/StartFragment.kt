@@ -36,6 +36,11 @@ class StartFragment : Fragment() {
             startCountdown()
         }, 3000)
 
+        binding.tvGuide.setOnClickListener {
+            val bottomSheet = GameGuideBottomSheetFragment()
+            bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+        }
+
         return binding.root
     }
 
