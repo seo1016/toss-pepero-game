@@ -95,8 +95,31 @@ class GameFragment : Fragment() {
 
         val maxX = maxOf(gameContainer.width - dpToPx(100), 0)
         val maxY = maxOf(gameContainer.height - dpToPx(100), 0)
-        val randomX = Random.nextInt(0, maxX)
-        val randomY = Random.nextInt(0, maxY)
+
+        var randomX: Int
+        var randomY: Int
+        var overlap: Boolean
+
+        // Generate a position that doesn't overlap any existing item
+        do {
+            randomX = Random.nextInt(0, maxX)
+            randomY = Random.nextInt(0, maxY)
+            overlap = false
+
+            for ((existingView, _) in itemsMap) {
+                val existingLeft = existingView.left
+                val existingTop = existingView.top
+                val existingRight = existingLeft + existingView.width
+                val existingBottom = existingTop + existingView.height
+
+                // Check if new item overlaps with an existing item
+                if (randomX < existingRight && randomX + dpToPx(100) > existingLeft &&
+                    randomY < existingBottom && randomY + dpToPx(100) > existingTop) {
+                    overlap = true
+                    break
+                }
+            }
+        } while (overlap)
 
         (imageView.layoutParams as FrameLayout.LayoutParams).apply {
             leftMargin = randomX
@@ -105,7 +128,6 @@ class GameFragment : Fragment() {
 
         val randomResource = itemResources.random()
         imageView.setImageResource(randomResource)
-
         itemsMap[imageView] = (randomResource == R.drawable.ic_pepero)
 
         imageView.setOnClickListener {
@@ -171,6 +193,7 @@ class GameFragment : Fragment() {
         val nextDelay = Random.nextLong(200, 400)
         gameContainer.postDelayed({ generateItem() }, nextDelay)
     }
+
 
     private fun gameOver() {
         progressAnimator.cancel()
