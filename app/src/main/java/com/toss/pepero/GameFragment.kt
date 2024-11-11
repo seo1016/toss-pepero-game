@@ -89,12 +89,12 @@ class GameFragment : Fragment() {
         }
 
         val imageView = ImageView(requireContext()).apply {
-            val size = dpToPx(60)
+            val size = dpToPx(100)
             layoutParams = FrameLayout.LayoutParams(size, size)
         }
 
-        val maxX = maxOf(gameContainer.width - dpToPx(60), 0)
-        val maxY = maxOf(gameContainer.height - dpToPx(60), 0)
+        val maxX = maxOf(gameContainer.width - dpToPx(100), 0)
+        val maxY = maxOf(gameContainer.height - dpToPx(100), 0)
         val randomX = Random.nextInt(0, maxX)
         val randomY = Random.nextInt(0, maxY)
 
