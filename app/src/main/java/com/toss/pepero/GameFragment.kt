@@ -25,10 +25,17 @@ class GameFragment : Fragment() {
     private val itemsMap = mutableMapOf<ImageView, Boolean>()
     private val itemResources = listOf(
         R.drawable.ic_bat,
+        R.drawable.ic_bat,
+        R.drawable.ic_break_through,
         R.drawable.ic_break_through,
         R.drawable.ic_chopstick,
+        R.drawable.ic_chopstick,
+        R.drawable.ic_pepero,
+        R.drawable.ic_pepero,
         R.drawable.ic_pepero,
         R.drawable.ic_tanghulu,
+        R.drawable.ic_tanghulu,
+        R.drawable.ic_wooden_stick,
         R.drawable.ic_wooden_stick
     )
 
@@ -188,7 +195,7 @@ class GameFragment : Fragment() {
             }
         }, 1500)
 
-        val nextDelay = Random.nextLong(200, 400)
+        val nextDelay = Random.nextLong(100, 300)
         gameContainer.postDelayed({ generateItem() }, nextDelay)
     }
 
