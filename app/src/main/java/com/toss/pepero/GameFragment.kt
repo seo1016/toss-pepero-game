@@ -207,12 +207,11 @@ class GameFragment : Fragment() {
 
                 fadeOutAnimator.start()
             }
-        }, 450)
+        }, 500)
 
         val nextDelay = Random.nextLong(100, 300)
         gameContainer.postDelayed({ generateItem() }, nextDelay)
     }
-
 
     private fun gameOver(reason: String = "시간 초과로 아쉽게 실패!") {
         progressAnimator.cancel()

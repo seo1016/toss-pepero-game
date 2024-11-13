@@ -145,7 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="부정한 방법으로 게임에 참여하는 경우,\n참여가 중단되거나 리워드가 회수될 수 있어요."
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="#4E5968"
             android:fontFamily="@font/pretendard_regular"
             android:layout_gravity="center"
