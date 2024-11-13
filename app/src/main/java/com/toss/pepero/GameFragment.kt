@@ -207,7 +207,7 @@ class GameFragment : Fragment() {
 
                 fadeOutAnimator.start()
             }
-        }, 425)
+        }, 450)
 
         val nextDelay = Random.nextLong(100, 300)
         gameContainer.postDelayed({ generateItem() }, nextDelay)
