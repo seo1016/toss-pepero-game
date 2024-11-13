@@ -187,19 +187,25 @@ class GameFragment : Fragment() {
 
         imageView.postDelayed({
             if (isAdded) {
-                val fadeOut = AlphaAnimation(1f, 0f)
-                fadeOut.duration = 300
-                fadeOut.setAnimationListener(object : android.view.animation.Animation.AnimationListener {
-                    override fun onAnimationStart(animation: android.view.animation.Animation?) {}
+                val fadeOutAnimator = ValueAnimator.ofFloat(1f, 0f).apply {
+                    duration = 300
 
-                    override fun onAnimationEnd(animation: android.view.animation.Animation?) {
-                        gameContainer.removeView(imageView)
-                        itemsMap.remove(imageView)
+                    addUpdateListener { animator ->
+                        val alphaValue = animator.animatedValue as Float
+                        imageView.alpha = alphaValue
+
+                        if (alphaValue <= 0.5f && imageView.hasOnClickListeners()) {
+                            imageView.setOnClickListener(null)
+                        }
                     }
 
-                    override fun onAnimationRepeat(animation: android.view.animation.Animation?) {}
-                })
-                imageView.startAnimation(fadeOut)
+                    addListener(onEnd = {
+                        gameContainer.removeView(imageView)
+                        itemsMap.remove(imageView)
+                    })
+                }
+
+                fadeOutAnimator.start()
             }
         }, 500)
 
