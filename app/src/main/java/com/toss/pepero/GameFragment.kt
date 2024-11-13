@@ -96,12 +96,12 @@ class GameFragment : Fragment() {
         }
 
         val imageView = ImageView(requireContext()).apply {
-            val size = dpToPx(125)
+            val size = dpToPx(115)
             layoutParams = FrameLayout.LayoutParams(size, size)
         }
 
-        val maxX = maxOf(gameContainer.width - dpToPx(125), 0)
-        val maxY = maxOf(gameContainer.height - dpToPx(125), 0)
+        val maxX = maxOf(gameContainer.width - dpToPx(115), 0)
+        val maxY = maxOf(gameContainer.height - dpToPx(115), 0)
 
         var randomX: Int
         var randomY: Int
@@ -118,8 +118,8 @@ class GameFragment : Fragment() {
                 val existingRight = existingLeft + existingView.width
                 val existingBottom = existingTop + existingView.height
 
-                if (randomX < existingRight && randomX + dpToPx(125) > existingLeft &&
-                    randomY < existingBottom && randomY + dpToPx(125) > existingTop) {
+                if (randomX < existingRight && randomX + dpToPx(115) > existingLeft &&
+                    randomY < existingBottom && randomY + dpToPx(115) > existingTop) {
                     overlap = true
                     break
                 }
@@ -207,7 +207,7 @@ class GameFragment : Fragment() {
 
                 fadeOutAnimator.start()
             }
-        }, 500)
+        }, 425)
 
         val nextDelay = Random.nextLong(100, 300)
         gameContainer.postDelayed({ generateItem() }, nextDelay)
