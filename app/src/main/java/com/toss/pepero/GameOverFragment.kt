@@ -17,6 +17,10 @@ class GameOverFragment : Fragment() {
     ): View {
         binding = FragmentGameOverBinding.inflate(inflater, container, false)
 
+        val failureReason = arguments?.getString("FAILURE_REASON") ?: "아쉽게 실패!"
+
+        binding.tvFailureReason.text = failureReason
+
         binding.btnRetry.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, GameFragment())

@@ -167,7 +167,15 @@ class GameFragment : Fragment() {
                         .commitAllowingStateLoss()
                 }
             } else {
-                gameOver()
+                val failureReason = when (randomResource) {
+                    R.drawable.ic_bat -> "앗, 방망이를 주워서 아쉽게 실패!"
+                    R.drawable.ic_break_through -> "앗, 뚫어뻥을 주워서 아쉽게 실패!"
+                    R.drawable.ic_chopstick -> "앗, 젓가락을 주워서 아쉽게 실패!"
+                    R.drawable.ic_tanghulu -> "앗, 탕후루를 주워서 아쉽게 실패!"
+                    R.drawable.ic_wooden_stick -> "앗, 나뭇가지를 주워서 아쉽게 실패!"
+                    else -> "앗, 다른 아이템을 주워서 아쉽게 실패!"
+                }
+                gameOver(failureReason)
             }
         }
 
@@ -200,10 +208,15 @@ class GameFragment : Fragment() {
     }
 
 
-    private fun gameOver() {
+    private fun gameOver(reason: String = "시간 초과로 아쉽게 실패!") {
         progressAnimator.cancel()
+        val fragment = GameOverFragment().apply {
+            arguments = Bundle().apply {
+                putString("FAILURE_REASON", reason)
+            }
+        }
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, GameOverFragment())
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commitAllowingStateLoss()
     }

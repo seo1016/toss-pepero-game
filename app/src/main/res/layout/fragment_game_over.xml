@@ -47,6 +47,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvFailureReason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="앗, 젓가락을 주워서 아쉽게 실패!"
