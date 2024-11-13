@@ -20,7 +20,7 @@ class GameFragment : Fragment() {
     private lateinit var binding: FragmentGameBinding
     private lateinit var progressAnimator: ValueAnimator
     private lateinit var gameContainer: FrameLayout
-    private val totalTimeInMillis = 20000L // 20초
+    private val totalTimeInMillis = 10000L
     private var collectedPepero = 0
     private val itemsMap = mutableMapOf<ImageView, Boolean>()
     private val itemResources = listOf(
