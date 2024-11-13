@@ -96,12 +96,12 @@ class GameFragment : Fragment() {
         }
 
         val imageView = ImageView(requireContext()).apply {
-            val size = dpToPx(100)
+            val size = dpToPx(125)
             layoutParams = FrameLayout.LayoutParams(size, size)
         }
 
-        val maxX = maxOf(gameContainer.width - dpToPx(100), 0)
-        val maxY = maxOf(gameContainer.height - dpToPx(100), 0)
+        val maxX = maxOf(gameContainer.width - dpToPx(125), 0)
+        val maxY = maxOf(gameContainer.height - dpToPx(125), 0)
 
         var randomX: Int
         var randomY: Int
@@ -118,8 +118,8 @@ class GameFragment : Fragment() {
                 val existingRight = existingLeft + existingView.width
                 val existingBottom = existingTop + existingView.height
 
-                if (randomX < existingRight && randomX + dpToPx(100) > existingLeft &&
-                    randomY < existingBottom && randomY + dpToPx(100) > existingTop) {
+                if (randomX < existingRight && randomX + dpToPx(125) > existingLeft &&
+                    randomY < existingBottom && randomY + dpToPx(125) > existingTop) {
                     overlap = true
                     break
                 }
@@ -144,7 +144,7 @@ class GameFragment : Fragment() {
                 imageView.setOnClickListener(null)
 
                 val fadeOut = AlphaAnimation(1f, 0f).apply {
-                    duration = 300
+                    duration = 200
                     setAnimationListener(object : android.view.animation.Animation.AnimationListener {
                         override fun onAnimationStart(animation: android.view.animation.Animation?) {}
 
@@ -188,7 +188,7 @@ class GameFragment : Fragment() {
         imageView.postDelayed({
             if (isAdded) {
                 val fadeOutAnimator = ValueAnimator.ofFloat(1f, 0f).apply {
-                    duration = 300
+                    duration = 200
 
                     addUpdateListener { animator ->
                         val alphaValue = animator.animatedValue as Float
